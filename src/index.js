@@ -18,11 +18,23 @@ class ClassComp extends Component {
     }
 }
 
+const projects = [
+    {name: 'web', desc: 'web全栈架构师'},
+    {name: 'python', desc: 'python高级工程师'}
+]
+
 const Jsx = (
-    <div>
-        <p>这是一个p标签</p>
+    <div style={{color: 'red'}}>
+        <p key={'key1'}>这是一个p标签</p>
         <FunComp name={'这是一个函数组件'}/>
         <ClassComp name={'这是一个class组件'}/>
+        <ul>
+            {projects.map(p => (
+                <li key={p.name} onClick={() => alert(p.name)}>课程：{p.name}， 简介：{p.desc}</li>
+            ))
+
+            }
+        </ul>
     </div>
 )
 

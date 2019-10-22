@@ -50,20 +50,32 @@ function createElements(vnode) {
     // 过滤 key, children等特殊 props
     Object.keys(rest).forEach(k => {
         // 特殊处理属性名className, htmlFor,
-        // style处理比较复杂，这里先不处理
+        // style处理比较复杂，这里先简单处理
         if(k === 'className') {
             node.setAttribute('class', rest[k]);
         } else if(k === 'htmlFor') {
             node.setAttribute('for', rest[k]);
-        } else {
+        } else if(k === 'style' && typeof rest[k] === 'object') {
+            let style = Object.keys(rest[k]).map(s => (s + ':' + rest[k][s])).join(';');
+            node.setAttribute('style', style)
+        } else if(k.startsWith('on')) {
+            let event = k.toLowerCase();
+            node[event] = rest[k]
+        }
+        else {
             node.setAttribute(k, rest[k])
         }
     });
 
     // 递归初始化子元素
-    children.map(child => {
+    children.forEach(child => {
         //子元素也是一个 vnode, 所以需要 调用 initVnode 初始化
-        node.appendChild(initVnode(child))
+        if(Array.isArray(child)) {
+            // 如果子元素是一个数组，需要遍历执行
+            child.forEach(c => node.appendChild(initVnode(c)))
+        } else {
+            node.appendChild(initVnode(child))
+        }
     });
 
     return node

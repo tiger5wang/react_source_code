@@ -4,11 +4,10 @@ import { createVnode } from './my_vdom';
 
 
 function createElement(type, props, ...children) {
-    console.log(arguments);
+    // console.log(arguments);
     delete props.__source;  // 删除没用的属性
     props.children = children;   // 将children属性 赋值给 props.children
     let vtype;  // 将用于区分组件类型
-    console.log(typeof type)
     if(typeof type === 'string') {   //原生 H5 标签， div, p, span, img, a 等等
         vtype = 1  // 原生标签 设置 vtype = 1
     } else if(typeof type === 'function') {  // 此种情况可能是 函数组件，也可能是 class 组件
