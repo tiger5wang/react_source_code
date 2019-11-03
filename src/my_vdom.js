@@ -41,13 +41,11 @@ export function initVnode(vnode) {
 // 创建原生元素
 function createElements(vnode) {
     const {type, props} = vnode;
-    const {key, children, ...rest} = props;
+    const { children, ...rest} = props;
     // 创建元素
     const node = document.createElement(type);
-    // vnode添加 key 属性
-    vnode.key = key;
-
-    // 过滤 key, children等特殊 props
+    delete rest.__self;
+    // 过滤 children等特殊 props
     Object.keys(rest).forEach(k => {
         // 特殊处理属性名className, htmlFor,
         // style处理比较复杂，这里先简单处理
@@ -91,9 +89,9 @@ function createClassComp(vnode) {
     */
     const comp = new type(props);
     // 调用其render方法获得 vdom
-    const newNode = comp.render();
+    const newVNode = comp.render();
     // 初始化 vdom,并返回
-    return initVnode(newNode)
+    return initVnode(newVNode)
 
 }
 
@@ -105,9 +103,9 @@ function createFuncComp(vnode) {
      * 所以，直接执行函数就可以获取 vdom
      * */
     // 执行函数返回 vdom
-    const newNode = type(props);
+    const newVNode = type(props);
     // 初始化 vdom, 并返回
-    return initVnode(newNode)
+    return initVnode(newVNode)
 }
 
 
