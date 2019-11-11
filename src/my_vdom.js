@@ -41,13 +41,11 @@ export function initVnode(vnode) {
 // 创建原生元素
 function createElements(vnode) {
     const {type, props} = vnode;
-    const {key, children, ...rest} = props;
+    const { children, ...rest} = props;
     // 创建元素
     const node = document.createElement(type);
-    // vnode添加 key 属性
-    vnode.key = key;
-
-    // 过滤 key, children等特殊 props
+    delete rest.__self;
+    // 过滤 children等特殊 props
     Object.keys(rest).forEach(k => {
         // 特殊处理属性名className, htmlFor,
         // style处理比较复杂，这里先简单处理

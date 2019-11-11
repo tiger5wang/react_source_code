@@ -23,20 +23,35 @@ const projects = [
     {name: 'python', desc: 'python高级工程师'}
 ]
 
-const Jsx = (
-    <div style={{color: 'red'}}>
-        <p key={'key1'}>这是一个p标签</p>
-        <FunComp name={'这是一个函数组件'}/>
-        <ClassComp name={'这是一个class组件'}/>
-        <ul>
-            {projects.map(p => (
-                <li key={p.name} onClick={() => alert(p.name)}>课程：{p.name}， 简介：{p.desc}</li>
-            ))
+// class Jsx extends Component {
+//   render() {
+//     return(
+//       <div style={{color: 'red'}}>
+//         <p key={'key1'}>这是一个p标签</p>
+//         <FunComp name={'这是一个函数组件'}/>
+//         <ClassComp name={'这是一个class组件'}/>
+//         <ul>
+//           {projects.map(p => (
+//             <li key={p.name} onClick={() => {alert(p.name); console.log(this)}}>课程：{p.name}， 简介：{p.desc}</li>
+//           ))
+//           }
+//         </ul>
+//       </div>
+//     )
+//   }
+// }
 
-            }
-        </ul>
-    </div>
-)
+const Jsx = <div style={{color: 'red'}}>
+  <p key={'key1'}>这是一个p标签</p>
+  <FunComp name={'这是一个函数组件'}/>
+  <ClassComp name={'这是一个class组件'}/>
+  <ul>
+    {projects.map(p => (
+      <li key={p.name} onClick={() => {alert(p.name); console.log(this)}}>课程：{p.name}， 简介：{p.desc}</li>
+    ))
+    }
+  </ul>
+</div>;
 
 console.log('Jsx', Jsx);   // 注意此处的Jsx不是上面的jsx语法表达式，而是 经过 React.createElement 编译过的 js 对象
 /*
